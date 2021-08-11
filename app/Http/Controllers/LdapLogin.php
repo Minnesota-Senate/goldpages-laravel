@@ -11,20 +11,15 @@ class LdapLogin extends Controller
 {
     public function login(Request $request){
 
-        $connection = Container::getDefaultConnection();
-        $connection->connect();
+        $credentials = [
+            'samaccountname' => $request->username,
+            'password' =>  $request->password,
+        ];
 
-        if ($connection->auth()->attempt($request->email, $request->password))
-        {
-            echo "Username and password are correct!";
-            $user = User::find('cn=Ariel Zannou');
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
 
-            // Get immediate groups the user is apart of:
-            $groups = $user->groups()->get();
-
-            foreach ($groups as $group) {
-                echo $group->getName();
-            }
+            $test = null;
         }
     }
 }

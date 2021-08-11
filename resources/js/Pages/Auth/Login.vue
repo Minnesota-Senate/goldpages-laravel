@@ -12,7 +12,7 @@
             {{ status }}
         </div>
 
-        <form @submit.prevent="submit">
+        <form @submit.prevent="form.post('api/userLogin')">
             <div>
                 <jet-label for="username" value="Username" />
                 <jet-input id="username" type="text" class="mt-1 block w-full" v-model="form.username" required autofocus />
