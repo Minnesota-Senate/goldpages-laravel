@@ -10,16 +10,19 @@ use LdapRecord\Models\ActiveDirectory\User;
 class LdapLogin extends Controller
 {
     public function login(Request $request){
+        
+        $connection = Container::getDefaultConnection();
+        $connection->connect();
 
-        $credentials = [
-            'samaccountname' => $request->username,
-            'password' =>  $request->password,
-        ];
+        if ($connection->auth()->attempt($request->username, $request->password, $stayAuthenticated = true)) {
+            // Successfully authenticated user.
+            $query = $connection->query();
 
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
+            $record = $query->findBy('mail', $request->username);
 
-            $test = null;
+            print_r($record);
+        } else {
+            echo 'Username or password is incorrect.';
         }
     }
 }

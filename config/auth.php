@@ -71,6 +71,12 @@ return [
             'model' => LdapRecord\Models\ActiveDirectory\User::class,
             'rules' => [],
         ],
+        'ldap' => [
+            // ...
+            'database' => [
+                // ...
+            ],
+        ],
 
         // 'users' => [
         //     'driver' => 'database',
